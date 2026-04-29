@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Zadania Tablice</title>
+</head>
+<body>
+
+    <div id="wyniki"></div>
+
+    <script>
+        var kontener = document.getElementById('wyniki');
+
+        // --- ZADANIE 1 ---
+        var tab1 = [7, 3, 1, 6, 9, 5, 4, 10, 2, 2];
+        kontener.innerHTML += "ZADANIE 1:<br>";
+        kontener.innerHTML += "5 komórka: " + tab1[4] + "<br>";
+        
+        tab1[6] = 12; 
+        
+        var tab2 = [];
+        for(var i = 0; i < tab1.length; i++) {
+            tab2[i] = tab1[i];
+        }
+
+        var tab3 = [];
+        for(var i = 0; i < tab1.length; i++) {
+            tab3[i] = tab1[i] + tab2[i];
+        }
+
+        // Odwrotna kolejność tab1 do tab2
+        var licznik = 0;
+        for(var i = tab1.length - 1; i >= 0; i--) {
+            tab2[licznik] = tab1[i];
+            licznik++;
+        }
+        kontener.innerHTML += "Tablica 3 (sumy): " + tab3.join(", ") + "<br><br>";
+
+        // --- ZADANIE 2 (Dane od użytkownika) ---
+        var t_user = [];
+        var ile_liczb = prompt("Zadanie 2: Ile liczb chcesz wpisać do tablicy?");
+        for(var i = 0; i < parseInt(ile_liczb); i++) {
+            var n = prompt("Podaj liczbe " + (i+1));
+            t_user.push(Number(n));
+        }
+
+        if(t_user.length > 0) {
+            var suma = 0;
+            var min = t_user[0];
+            var max = t_user[0];
+            var trojki = 0;
+            var parzyste = 0;
+            var przez3 = 0;
+
+            for(var i = 0; i < t_user.length; i++) {
+                suma += t_user[i];
+                if(t_user[i] < min) min = t_user[i];
+                if(t_user[i] > max) max = t_user[i];
+                if(t_user[i] == 3) trojki++;
+                if(t_user[i] % 2 == 0) parzyste++;
+                if(t_user[i] % 3 == 0) przez3++;
+            }
+
+            // Średnia i kwadraty
+            var srednia = suma / t_user.length;
+            var t_kwadrat = [];
+            for(var i = 0; i < t_user.length; i++) {
+                t_kwadrat[i] = t_user[i] * t_user[i];
+            }
+
+            // Sortowanie bąbelkowe (rosnąco)
+            var t_sort = [...t_user];
+            for(var i = 0; i < t_sort.length; i++) {
+                for(var j = 0; j < t_sort.length - 1; j++) {
+                    if(t_sort[j] > t_sort[j+1]) {
+                        var temp = t_sort[j];
+                        t_sort[j] = t_sort[j+1];
+                        t_sort[j+1] = temp;
+                    }
+                }
+            }
+
+            kontener.innerHTML += "ZADANIE 2:<br>";
+            kontener.innerHTML += "Min: " + min + ", Max: " + max + ", Srednia: " + srednia.toFixed(2) + "<br>";
+            kontener.innerHTML += "Ilość 3: " + trojki + ", Parzyste: " + parzyste + ", Podzielne przez 3: " + przez3 + "<br><br>";
+        }
+
+        // --- ZADANIE 3 (Litery) ---
+        var slowo = prompt("Zadanie 3: Wpisz dowolne słowo (np. 10 liter):");
+        var t_litery = slowo.split("");
+        var t_zamiana = [];
+        for(var i = 0; i < t_litery.length; i++) {
+            var litera = t_litery[i];
+            if(litera == litera.toUpperCase()) {
+                t_zamiana[i] = litera.toLowerCase();
+            } else {
+                t_zamiana[i] = litera.toUpperCase();
+            }
+        }
+        kontener.innerHTML += "ZADANIE 3:<br>Zamiana wielkości: " + t_zamiana.join("") + "<br><br>";
+
+        // --- ZADANIE 4 (100 losowych) ---
+        var sto = [];
+        for(var i = 0; i < 100; i++) {
+            sto[i] = Math.floor(Math.random() * 50) + 1;
+        }
+
+        var max_sto = Math.max(...sto);
+        var ile_max = 0;
+        for(var i = 0; i < sto.length; i++) {
+            if(sto[i] == max_sto) ile_max++;
+        }
+
+        var w_przedziale = [];
+        for(var i = 0; i < sto.length; i++) {
+            if(sto[i] >= 5 && sto[i] < 15) w_przedziale.push(sto[i]);
+        }
+
+        kontener.innerHTML += "ZADANIE 4 (100 liczb):<br>";
+        kontener.innerHTML += "Największa: " + max_sto + " (wystąpiła " + ile_max + " razy)<br>";
+        kontener.innerHTML += "Liczby z przedziału <5, 15): " + w_przedziale.join(", ") + "<br><br>";
+
+        // --- ZADANIE 5 (Ciągi) ---
+        var fib = [0, 1];
+        for(var i = 2; i < 100; i++) {
+            fib[i] = fib[i-1] + fib[i-2];
+        }
+
+        var co_trzy = [];
+        for(var i = 0; i < 100; i++) {
+            co_trzy[i] = (i + 1) * 3;
+        }
+
+        var potegi2 = [];
+        var start = 2;
+        for(var i = 0; i < 100; i++) {
+            potegi2[i] = start;
+            start = start * 2;
+        }
+
+        kontener.innerHTML += "ZADANIE 5 (Ciągi):<br>";
+        kontener.innerHTML += "Fibonacci (początek): " + fib.slice(0, 10).join(", ") + "...<br>";
+        kontener.innerHTML += "Ciąg 3, 6, 9...: " + co_trzy.slice(0, 10).join(", ") + "...<br>";
+        kontener.innerHTML += "Ciąg 2, 4, 8...: " + potegi2.slice(0, 10).join(", ") + "...<br>";
+
+    </script>
+</body>
+</html>
